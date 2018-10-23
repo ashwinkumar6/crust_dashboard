@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tabs, Row, Col, Dropdown, Button, Icon, Menu, Card, Skeleton } from "antd";
+import { Tabs, Row, Col, Card, Skeleton, Select } from "antd";
 import DropdownOptions from "./SubComponents/DropDownRender";
 import Charts from "./Charts";
 import LineChart from "./LineChart";
@@ -119,6 +119,47 @@ export class RenderAreaChart extends Component {
     )
   }
 }
+
+export class RenderSelect extends Component {
+
+  countryMenu1() {
+    let countries = Object.keys(this.props.data.countriesCount)
+    countries.sort();
+    let countryList = countries.map((country, k) => {
+        return (
+            <Select.Option  key={`menu-select-${k}`}>
+              {country}
+            </Select.Option >
+        )
+    });
+    return countryList;
+}
+  render() {
+    const countryMenu1 = this.countryMenu1();
+    const { data } = this.props;
+    return (
+      <Row gutter={24} style={{ margin: "24px 8px" }}>
+        <Col className="gutter-row" span={24}>
+          <Card
+            style={{
+              background: "#fff",
+              borderRadius: 5,
+              minHeight: 500
+            }}
+            className="cus-card-1 tab-1-base"
+            title="Select"
+            >
+            <Select mode="multiple" style={{ width: '100%' }} placeholder="Please select" 
+            filterOption={true} optionFilterProp='children' maxTagCount={10}>
+              {countryMenu1}
+            </Select>
+          </Card>
+        </Col>
+      </Row>
+    )
+  }
+}
+
 class TabComp extends Component {
   callback(key) {
     console.log(key);
@@ -129,6 +170,7 @@ class TabComp extends Component {
       <TabPane tab={tabName} key={key} className="tab-1-panel">
         <DropdownOptions contents={tabData.contents} data={tabData.data} mod={tabData.mod} filterAction={tabData.filterAction}
           labels={tabData.labels} selectedLabel={tabData.selectedLabel} />
+          <RenderSelect data={tabData.labels}/>          
         <RenderAreaChart showFailedCount={this.props.showFailedCount} chartData={chartData} filteredLogs={filteredLogs} loading={loading}/>
         <RenderTable tableData={tableData} loading={loading} tabData={tabData}/>
       </TabPane>

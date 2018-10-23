@@ -6,6 +6,7 @@ export const daysInMilliseconds = (DAYS) => hoursInMilliseconds(24) * DAYS;
 export const prepareLogs = (logs) => {
     const osCountMap = {};
     const countryCountMap = {};
+    const idMap = [];
     const successfulConnections = [];
     const failedConnections = [];
     let from = new Date;
@@ -39,6 +40,12 @@ export const prepareLogs = (logs) => {
         if (!osCountMap[log.peer_responder.os]) {
             osCountMap[log.peer_responder.os] = 0;
         }
+        // if (!idMap.includes(log.peer_requester.name +'(' + log.peer_requester.id +')')) {
+        //     idMap.push( log.peer_requester.name +'(' + log.peer_requester.id +')' )
+        // }
+        // if (!idMap.includes(log.peer_responder.name +'(' + log.peer_responder.id +')' )) {
+        //     idMap.push( log.peer_responder.name +'(' + log.peer_responder.id +')' )
+        // }
         osCountMap[log.peer_requester.os] = osCountMap[log.peer_requester.os] + 1;
         osCountMap[log.peer_responder.os] = osCountMap[log.peer_responder.os] + 1;
         if (!countryCountMap[log.peer_requester.geo_info.country_name]) {
@@ -58,6 +65,7 @@ export const prepareLogs = (logs) => {
         logs,
         osCountMap,
         countryCountMap,
+        // idMap,
         successfulConnections,
         failedConnections,
         dateRange: {

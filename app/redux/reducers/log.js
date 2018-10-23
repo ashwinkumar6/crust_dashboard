@@ -17,6 +17,7 @@ const initialState = {
         natTypes: Object.values(NatType),
         osCount: {},
         countriesCount: {}
+        // id: []
     },
     paging: {
         done: 0,
@@ -111,6 +112,7 @@ const logReducer = (state = initialState, action) => {
                     natTypes: Object.values(NatType),
                     osCount: preparedLogs.osCountMap,
                     countriesCount: preparedLogs.countryCountMap
+                    // id:preparedLogs.idMap
                 };
                 state = {
                     ...initialState,
